@@ -9,9 +9,9 @@
 <ul>
     <li>Membership Type: @Model.MembershipType.Name</li>
     @{
-        if (Model.Birthdate != null)
+        if (Model.Birthdate.HasValue)
         {
-            <li>Birthdate: @Model.Birthdate.GetValueOrDefault().ToString("dd/MM/yyyy")</li>
+            <li>Birthdate: @Model.Birthdate.GetValueOrDefault().ToShortDateString()</li>
         }
     }
 </ul>
