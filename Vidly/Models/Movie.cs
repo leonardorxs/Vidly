@@ -14,7 +14,7 @@ namespace Vidly.Models
 
         #region NameValidation
         [Required]
-        [StringLength(255)]
+        [StringLength(100)]
         #endregion
         public string Name { get; set; }
 
@@ -29,7 +29,7 @@ namespace Vidly.Models
 
         #region StockValidation
         [Required]
-        [Range(0, int.MaxValue)]
+        [Range(1, 20)]
         [Display(Name = "Number in Stock")]
         #endregion
         public int Stock { get; set; }
