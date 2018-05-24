@@ -1,9 +1,9 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace Vidly.Models
+namespace Vidly.Dtos
 {
-    public class Customer
+    public class CustomerDto
     {
         public int Id { get; set; }
 
@@ -12,21 +12,12 @@ namespace Vidly.Models
         [StringLength(60)]
         #endregion
         public string Name { get; set; }
-
-        #region BirthdateValidation
-        [Display(Name = "Date of Birth")]
-        [Min18YearsIfAMember]
-        #endregion
+        
+        //[Min18YearsIfAMember]
         public DateTime? Birthdate { get; set; }
 
         public bool IsSubscribedToNewsLetter { get; set; }
 
-        public MembershipType MembershipType { get; set; }
-
-        #region MembershipTypeIdValidation
-        [Required]
-        [Display(Name = "Membership Type")]
-        #endregion
         public byte MembershipTypeId { get; set; }
     }
 }

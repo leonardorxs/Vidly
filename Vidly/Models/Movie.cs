@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Drawing;
-using System.Linq;
-using System.Web;
-using System.Web.ModelBinding;
 
 namespace Vidly.Models
 {
@@ -33,13 +28,13 @@ namespace Vidly.Models
         [Display(Name = "Number in Stock")]
         #endregion
         public int Stock { get; set; }
-        
+
         public Genre Genre { get; set; }
 
         #region GenreValidation
         [Required]
         [Display(Name = "Genre")]
-            #endregion
+        #endregion
         public byte GenreId { get; set; }
 
     }
