@@ -25,16 +25,16 @@ namespace Vidly.Controllers
         #endregion
 
         // GET: Movies/Random
-        public ApplicationDbContext _context { get; set; }
+        private ApplicationDbContext Context { get; set; }
 
         public MoviesController()
         {
-            _context = new ApplicationDbContext();
+            Context = new ApplicationDbContext();
         }
 
         protected override void Dispose(bool disposing)
         {
-            _context.Dispose();
+            Context.Dispose();
         }
 
         public ActionResult Random()
@@ -61,14 +61,14 @@ namespace Vidly.Controllers
         //movies
         public ViewResult Index()
         {
-            var movies = _context.Movies.Include(m => m.Genre).ToList();
+            var movies = Context.Movies.Include(m => m.Genre).ToList();
 
             return View(movies);
         }
 
         public ActionResult Details(int id)
         {
-            var movie = _context.Movies.Include(m => m.Genre).SingleOrDefault(m => m.Id == id);
+            var movie = Context.Movies.Include(m => m.Genre).SingleOrDefault(m => m.Id == id);
 
             if (movie == null)
                 return HttpNotFound();
@@ -78,7 +78,7 @@ namespace Vidly.Controllers
 
         public ActionResult New()
         {
-            var genres = _context.Genres.ToList();
+            var genres = Context.Genres.ToList();
             var viewModel = new MovieFormViewModel
             {
                 Genres = genres
@@ -95,7 +95,7 @@ namespace Vidly.Controllers
             {
                 var viewModel = new MovieFormViewModel(movie)
                 {
-                    Genres = _context.Genres.ToList()
+                    Genres = Context.Genres.ToList()
                 };
 
                 return View("MovieForm", viewModel);
@@ -104,11 +104,11 @@ namespace Vidly.Controllers
             if (movie.Id == 0)
             {
                 movie.AddedDate = DateTime.Now;
-                _context.Movies.Add(movie);
+                Context.Movies.Add(movie);
             }
             else
             {
-                var movieInDb = _context.Movies.Single(m => m.Id == movie.Id);
+                var movieInDb = Context.Movies.Single(m => m.Id == movie.Id);
 
                 movieInDb.Name = movie.Name;
                 movieInDb.ReleasedDate = movie.ReleasedDate;
@@ -117,21 +117,21 @@ namespace Vidly.Controllers
 
             }
 
-            _context.SaveChanges();
+            Context.SaveChanges();
 
             return RedirectToAction("Index", "Movies");
         }
 
         public ActionResult Edit(int id)
         {
-            var movie = _context.Movies.SingleOrDefault(m => m.Id == id);
+            var movie = Context.Movies.SingleOrDefault(m => m.Id == id);
 
             if (movie == null)
                 return HttpNotFound();
 
             var viewModel = new MovieFormViewModel(movie)
             {
-                Genres = _context.Genres.ToList()
+                Genres = Context.Genres.ToList()
             };
 
             return View("MovieForm", viewModel);
