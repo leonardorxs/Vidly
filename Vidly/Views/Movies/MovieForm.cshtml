@@ -5,34 +5,38 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>@Model.Title</h2>
-
-@using (Html.BeginForm("Save", "Movies"))
-{
-    <div class="form-group">
-        @Html.LabelFor(m => m.Name)
-        @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
-        @Html.ValidationMessageFor(m => m.Name)
+<div class="row">
+    <div class="col-12">
+        <h2>@Model.Title</h2>
+        @using (Html.BeginForm("Save", "Movies"))
+        {
+            <div class="form-group">
+                @Html.LabelFor(m => m.Name)
+                @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Name)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.ReleasedDate)
+                @Html.TextBoxFor(m => m.ReleasedDate, "{0:dd/MM/yyyy}", new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.ReleasedDate)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.GenreId)
+                @Html.DropDownListFor(m => m.GenreId, new SelectList(Model.Genres, "Id", "Name"), "Select Genre", new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.GenreId)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Stock)
+                @Html.TextBoxFor(m => m.Stock, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Stock)
+            </div>
+            @Html.HiddenFor(m => m.Id)
+            @Html.AntiForgeryToken()
+            <button type="submit" class="btn btn-primary pull-right">Save</button>
+        }
+        @Html.ActionLink("Voltar", "Index", "Movies", new { @class = "btn btn-primary" })
     </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.ReleasedDate)
-        @Html.TextBoxFor(m => m.ReleasedDate, "{0:dd/MM/yyyy}" , new { @class = "form-control" })
-        @Html.ValidationMessageFor(m => m.ReleasedDate)
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.GenreId)
-        @Html.DropDownListFor(m => m.GenreId, new SelectList(Model.Genres, "Id", "Name"), "Select Genre", new { @class = "form-control" })
-        @Html.ValidationMessageFor(m => m.GenreId)
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.Stock)
-        @Html.TextBoxFor(m => m.Stock, new { @class = "form-control" })
-        @Html.ValidationMessageFor(m => m.Stock)
-    </div>
-    @Html.HiddenFor(m => m.Id)
-    @Html.AntiForgeryToken()
-    <button type="submit" class="btn btn-primary">Save</button>
-}
+</div>
 
 @section scripts
 {

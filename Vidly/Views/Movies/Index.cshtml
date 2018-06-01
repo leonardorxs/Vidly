@@ -1,31 +1,36 @@
-﻿@using Vidly.Models
-@model IEnumerable<Vidly.Models.Movie>
+﻿@model IEnumerable<Vidly.Models.Movie>
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<h2>Movies</h2>
-@Html.ActionLink("New Movie", "New", "Movies", null, new { @class = "btn btn-primary" })
+<div class="row mb-3">
+    <h1 class="col-6 my-auto">Movies</h1>
+    <div class="col-6 my-auto text-right">@Html.ActionLink("New Movie", "New", "Movies", null, new { @class = "btn btn-primary" })</div>
+</div>
 
 @{
+    const int maxLength = 20;
+    const int removeLength = 20 - 3;
 
-    <table class="table table-bordered table-hover">
+    <table class="table table-hover">
         <thead>
-            <tr>
-                <th>Movies</th>
-                <th>Genre</th>
-            </tr>
+        <tr>
+            <th scope="col" class="align-middle">#</th>
+            <th scope="col" class="align-middle">Movies</th>
+            <th scope="col" class="align-middle">Genre</th>
+        </tr>
         </thead>
         <tbody>
-            @foreach (var movie in Model)
-            {
-                <tr>
-                    <td>@Html.ActionLink(movie.Name, "Edit", "Movies", new { id = movie.Id }, null)</td>
-                    <td>@movie.Genre.Name</td>
-                </tr>
-            }
+
+        @foreach (var movie in Model)
+        {
+            <tr>
+                <th scope="row" class="align-middle">@movie.Id</th>
+                <td class="align-middle">@Html.ActionLink((movie.Name.Length > maxLength) ? $"{movie.Name.Remove(removeLength)}..." : movie.Name,
+                                             "Edit", "Movies", new {id = movie.Id}, new {@class = "btn btn-link"})</td>
+                <td class="align-middle">@movie.Genre.Name</td>
+            </tr>
+        }
         </tbody>
     </table>
-
 }
