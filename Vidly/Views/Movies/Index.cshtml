@@ -1,5 +1,4 @@
-﻿@model IEnumerable<Vidly.Models.Movie>
-@{
+﻿@{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -8,29 +7,75 @@
     <div class="col-6 my-auto text-right">@Html.ActionLink("New Movie", "New", "Movies", null, new { @class = "btn btn-primary" })</div>
 </div>
 
-@{
-    const int maxLength = 20;
-    const int removeLength = 20 - 3;
-
-    <table class="table table-hover">
+<div class="row">
+    <table id="movies" class="table table-hover table-bordered">
         <thead>
         <tr>
-            <th scope="col" class="align-middle">#</th>
             <th scope="col" class="align-middle">Movies</th>
             <th scope="col" class="align-middle">Genre</th>
+            <th scope="col" class="align-middle">Delete</th>
         </tr>
         </thead>
         <tbody>
-
-        @foreach (var movie in Model)
-        {
-            <tr>
-                <th scope="row" class="align-middle">@movie.Id</th>
-                <td class="align-middle">@Html.ActionLink((movie.Name.Length > maxLength) ? $"{movie.Name.Remove(removeLength)}..." : movie.Name,
-                                             "Edit", "Movies", new {id = movie.Id}, new {@class = "btn btn-link"})</td>
-                <td class="align-middle">@movie.Genre.Name</td>
-            </tr>
-        }
         </tbody>
     </table>
+</div>
+
+@section scripts
+{
+    <script>
+        $(document).ready(function() {
+            var table = $("#movies").DataTable({
+                "bLengthChange": false,
+                ajax: {
+                    url: "/api/movies/",
+                    dataSrc: ""
+                },
+                columns: [
+                    {
+                        className: "align-middle",
+                        data: "name",
+                        render: function(data, type, movie) {
+                            return "<a href='/movies/edit/" +
+                                movie.id +
+                                "' class='btn btn-link'>" +
+                                data + "</a>";
+                        } 
+                    },
+                    {
+                        className: "align-middle",
+                        data: "genre.name"
+                    },
+                    {
+                        className: "align-middle",
+                        data: "id",
+                        render: function(data) {
+                            return "<button class='btn btn-link js-delete' data-movie-id='" + data + "'>Delete</button>";
+                        }
+                    }
+                ]
+            });
+
+            $("#movies").on("click",
+                ".js-delete",
+                function() {
+                    var button = $(this);
+
+                    bootbox.confirm("Are you sure you want to delete this movie?",
+                        function (result) {
+                            if (result) {
+                                $.ajax({
+                                    url: "/api/movies/" + button.attr("data-movie-id"),
+                                    method: "DELETE",
+                                    success: function () {
+                                        table.row(button.parents("tr")).remove().draw();
+                                    }
+                                });
+                            }
+                        });
+                }
+            )
+        })
+
+    </script>
 }
