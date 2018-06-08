@@ -1,0 +1,47 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="row mb-3">
+    <h1 class="col-6 my-auto">Movies</h1>
+</div>
+
+<div class="row">
+    <table id="movies" class="table table-hover table-bordered">
+        <thead>
+        <tr>
+            <th scope="col" class="align-middle">Movies</th>
+            <th scope="col" class="align-middle">Genre</th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</div>
+
+@section scripts
+{
+    <script>
+        $(document).ready(function() {
+            var table = $("#movies").DataTable({
+                "bLengthChange": false,
+                ajax: {
+                    url: "/api/movies/",
+                    dataSrc: ""
+                },
+                columns: [
+                    {
+                        className: "align-middle",
+                        data: "name"
+                    },
+                    {
+                        className: "align-middle",
+                        data: "genre.name"
+                    }
+                ]
+            });
+
+        })
+
+    </script>
+}
