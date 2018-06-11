@@ -87,6 +87,7 @@ namespace Vidly.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = RoleName.CanManageMovies)]
         [ValidateAntiForgeryToken]
         public ActionResult Save(Movie movie)
         {
@@ -121,6 +122,7 @@ namespace Vidly.Controllers
             return RedirectToAction("Index", "Movies");
         }
 
+        [Authorize(Roles = RoleName.CanManageMovies)]
         public ActionResult Edit(int id)
         {
             var movie = Context.Movies.SingleOrDefault(m => m.Id == id);

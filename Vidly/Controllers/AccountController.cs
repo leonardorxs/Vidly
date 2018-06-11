@@ -151,6 +151,8 @@ namespace Vidly.Controllers
 
             var user = new ApplicationUser
             {
+                FullName = model.FullName,
+                PhoneNumber = model.PhoneNumber,
                 UserName = model.Email,
                 Email = model.Email,
                 Cpf = model.Cpf
@@ -371,11 +373,13 @@ namespace Vidly.Controllers
                 }
                 var user = new ApplicationUser
                 {
+                    FullName = model.FullName,
+                    PhoneNumber = model.PhoneNumber,
                     UserName = model.Email,
                     Email = model.Email,
                     Cpf = model.Cpf
                 };
-                var result = await UserManager.CreateAsync(user);
+                var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
                     result = await UserManager.AddLoginAsync(user.Id, info.Login);

@@ -1,10 +1,7 @@
-using System.ComponentModel.DataAnnotations;
-
 namespace Vidly.Migrations
 {
-    using System;
     using System.Data.Entity.Migrations;
-    
+
     public partial class AddUpdates : DbMigration
     {
         public override void Up()
@@ -12,17 +9,17 @@ namespace Vidly.Migrations
             CreateTable(
                 "dbo.Genres",
                 c => new
-                    {
-                        Id = c.Byte(nullable: false),
-                        Name = c.String(nullable: false, maxLength: 255),
-                    })
+                {
+                    Id = c.Byte(nullable: false),
+                    Name = c.String(nullable: false, maxLength: 255),
+                })
                 .PrimaryKey(t => t.Id);
             CreateTable(
                 "dbo.Movies",
                 c => new
                 {
-                    Id = c.Int(nullable: false),
-                    Name = c.String(nullable: false, maxLength:255),
+                    Id = c.Int(nullable: false, identity: true),
+                    Name = c.String(nullable: false, maxLength: 255),
                     ReleasedDate = c.DateTime(nullable: false),
                     AddedDate = c.DateTime(nullable: false),
                     Stock = c.Int(nullable: false),
@@ -36,7 +33,7 @@ namespace Vidly.Migrations
             AddForeignKey("dbo.Movies", "GenreId", "dbo.Genres", "Id", cascadeDelete: true);
             DropColumn("dbo.Movies", "Genre");
         }
-        
+
         public override void Down()
         {
             AddColumn("dbo.Movies", "Genre", c => c.String());

@@ -1151,8 +1151,8 @@ $.extend( $.validator, {
 		required: { required: true },
 		email: { email: true },
 		url: { url: true },
-		date: { date: true },
-		dateISO: { dateISO: true },
+		date: { date: false },
+		dateISO: { dateISO: false },
 		number: { number: true },
 		digits: { digits: true },
 		creditcard: { creditcard: true }
