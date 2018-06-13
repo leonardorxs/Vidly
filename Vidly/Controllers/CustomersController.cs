@@ -23,6 +23,11 @@ namespace Vidly.Controllers
 
         public ViewResult Index()
         {
+            //if (MemoryCache.Default[DbNames.Genres] == null)
+            //    MemoryCache.Default[DbNames.Genres] = _context.Genres.ToList();
+
+            //var genres = MemoryCache.Default[DbNames.Genres] as IEnumerable<Genre>;
+
             return View();
         }
 
