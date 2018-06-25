@@ -27,7 +27,9 @@ namespace Vidly.Models
         [Range(1, 20)]
         [Display(Name = "Number in Stock")]
         #endregion
-        public int Stock { get; set; }
+        public int NumberInStock { get; set; }
+
+        public int NumberAvailable { get; set; }
 
         public Genre Genre { get; set; }
 

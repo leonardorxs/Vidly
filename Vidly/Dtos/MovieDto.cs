@@ -23,7 +23,9 @@ namespace Vidly.Dtos
         [Required]
         [Range(1, 20)]
         #endregion
-        public int Stock { get; set; }
+        public int NumberInStock { get; set; }
+
+        public int NumberAvailable { get; set; }
 
         public GenreDto Genre { get; set; }
 

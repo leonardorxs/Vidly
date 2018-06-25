@@ -27,7 +27,7 @@ namespace Vidly.ViewModel
         [Range(1, 20)]
         [Display(Name = "Number in Stock")]
         #endregion
-        public int? Stock { get; set; }
+        public int? NumberInStock { get; set; }
 
         #region GenreValidation
         [Required]
@@ -47,7 +47,7 @@ namespace Vidly.ViewModel
             Id = movie.Id;
             Name = movie.Name;
             ReleasedDate = movie.ReleasedDate;
-            Stock = movie.Stock;
+            NumberInStock = movie.NumberInStock;
             GenreId = movie.GenreId;
         }
     }

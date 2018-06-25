@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
@@ -24,16 +25,21 @@ namespace Vidly.Controllers.Api
             _context.Dispose();
         }
 
-        //URIs
+
         //GET /api/movies
-        public IHttpActionResult GetMovies()
+        public IEnumerable<MovieDto> GetMovies(string query = null)
         {
-            var movieDtos = _context.Movies
+            var moviesQuery = _context.Movies
                 .Include(m => m.Genre)
+                .Where(m => m.NumberAvailable > 0);
+
+            if (!string.IsNullOrWhiteSpace(query))
+                moviesQuery = moviesQuery.Where(m => m.Name.Contains(query));
+
+
+            return moviesQuery
                 .ToList()
                 .Select(Mapper.Map<Movie, MovieDto>);
-
-            return Ok(movieDtos);
         }
 
         //GET /api/movies/1
@@ -51,6 +57,8 @@ namespace Vidly.Controllers.Api
         [HttpPost]
         public IHttpActionResult CreateMovie(MovieDto movieDto)
         {
+            movieDto.NumberAvailable = movieDto.NumberInStock;
+
             if (!ModelState.IsValid)
                 return BadRequest();
 
