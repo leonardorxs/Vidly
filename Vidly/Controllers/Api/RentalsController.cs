@@ -1,5 +1,9 @@
-﻿using System;
+﻿using AutoMapper;
+using System;
+using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
+using System.Net;
 using System.Web.Http;
 using Vidly.Dtos;
 using Vidly.Models;
@@ -7,11 +11,11 @@ using Vidly.Models;
 
 namespace Vidly.Controllers.Api
 {
-    public class NewRentalsController : ApiController
+    public class RentalsController : ApiController
     {
         private ApplicationDbContext _context;
 
-        public NewRentalsController()
+        public RentalsController()
         {
             _context = new ApplicationDbContext();
         }
@@ -22,8 +26,30 @@ namespace Vidly.Controllers.Api
         }
 
         [HttpGet]
-        public IHttpActionResult Index()
+        public IEnumerable<RentalDto> Index()
         {
+            var rentals = _context.Rentals
+                .Include(r => r.Customer)
+                .Include(r => r.Movie)
+                .Where(r => r.ReturnedDate == null)
+                .ToList()
+                .Select(Mapper.Map<Rental, RentalDto>);
+
+            return rentals;
+        }
+
+        [HttpPut]
+        public IHttpActionResult CheckIn(int id, RentalDto rentalDto)
+        {
+            if (!ModelState.IsValid)
+                throw new HttpResponseException(HttpStatusCode.BadRequest);
+
+            var rentalInDb = _context.Rentals.SingleOrDefault();
+
+            if (rentalInDb == null)
+                throw new HttpResponseException(HttpStatusCode.NotFound);
+
+
             return Ok();
         }
 
@@ -42,7 +68,7 @@ namespace Vidly.Controllers.Api
                     return BadRequest("Movie is not available");
 
                 movie.NumberAvailable--;
-                 
+
                 var rental = new Rental()
                 {
                     Customer = customer,

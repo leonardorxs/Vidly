@@ -67,17 +67,17 @@ th, td, .btn-link, tr {
 }
 
 /* width */
-table ::-webkit-scrollbar {
+table tbody ::-webkit-scrollbar {
     height: 3px;
 }
 
 /* Track */
-table ::-webkit-scrollbar-track {
+table tbody ::-webkit-scrollbar-track {
     background: #4E5D6C;
 }
 
 /* Handle */
-table ::-webkit-scrollbar-thumb {
+table tbody ::-webkit-scrollbar-thumb {
     background: #DF691A;
 }
 
