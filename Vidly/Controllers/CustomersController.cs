@@ -28,7 +28,7 @@ namespace Vidly.Controllers
 
             //var genres = MemoryCache.Default[DbNames.Genres] as IEnumerable<Genre>;
 
-            return View();
+            return View("List");
         }
 
         public ActionResult Details(int id)

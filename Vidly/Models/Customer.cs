@@ -10,11 +10,12 @@ namespace Vidly.Models
         #region NameValidation
         [Required]
         [StringLength(60)]
+        [Display(Name = "Nome")]
         #endregion
         public string Name { get; set; }
 
         #region BirthdateValidation
-        [Display(Name = "Date of Birth")]
+        [Display(Name = "Data Nascimento")]
         [Min18YearsIfAMember]
         #endregion
         public DateTime? Birthdate { get; set; }
@@ -25,7 +26,7 @@ namespace Vidly.Models
 
         #region MembershipTypeIdValidation
         [Required]
-        [Display(Name = "Membership Type")]
+        [Display(Name = "Plano")]
         #endregion
         public byte MembershipTypeId { get; set; }
     }

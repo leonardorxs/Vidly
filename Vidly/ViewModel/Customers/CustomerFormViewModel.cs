@@ -13,8 +13,18 @@ namespace Vidly.ViewModel
             get
             {
                 if (Customer != null && Customer.Id != 0)
-                    return "Edit Customer";
-                return "New Customer";
+                    return "Editar Cliente";
+                return "Cadastrar Cliente";
+            }
+        }
+
+        public string Action
+        {
+            get
+            {
+                if (Customer != null && Customer.Id != 0)
+                    return "Editar";
+                return "Cadastrar";
             }
         }
     }

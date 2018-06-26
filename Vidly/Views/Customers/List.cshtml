@@ -1,20 +1,20 @@
 ﻿@{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Clientes";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <div class="row mb-3">
     <div class="col-12"></div>
-    <h1 class="col-6 my-auto">Customers</h1>
-    <div class="col-6 my-auto text-right">@Html.ActionLink("New Customer", "New", "Customers", null, new {@class = "btn btn-primary"})</div>
+    <h1 class="col-6 my-auto">Clientes</h1>
+    <div class="col-6 my-auto text-right">@Html.ActionLink("Novo Cliente", "New", "Customers", null, new {@class = "btn btn-primary"})</div>
 </div>
 
 <div class="row">
     <table id="customers" class="table table-hover table-bordered">
         <thead>
             <tr>
-                <th scope="col" class="align-middle">Customer</th>
-                <th scope="col" class="align-middle">Membership Type</th>
-                <th scope="col" class="align-middle">Delete</th>
+                <th scope="col" class="align-middle">Cliente</th>
+                <th scope="col" class="align-middle">Tipo</th>
+                <th scope="col" class="align-middle">Deletar</th>
             </tr>
         </thead>
         <tbody>
@@ -28,6 +28,14 @@
     <script>
         $(document).ready(function() {
             var table = $("#customers").DataTable({
+                "language": {
+                    "search": "Buscar: ",
+                    "paginate": {
+                        "previous": "Anterior",
+                        "next": "Próximo"
+                    }
+                },
+                "info": false,
                 "bLengthChange": false,
                 ajax: {
                     url: "/api/customers/",
@@ -48,13 +56,14 @@
                     {
                         className: "align-middle",
                         data: "membershipType.name"
-                    }
-                    ,
+                    },
                     {
                         className: "align-middle",
                         data: "id",
                         render: function(data) {
-                            return "<button class='btn btn-link js-delete' data-customer-id='" + data + "'>Delete</button>"
+                            return "<button class='btn btn-link js-delete' data-customer-id='" +
+                                data +
+                                "'>Deletar</button>"
                         }
                     }
                 ]
@@ -65,18 +74,22 @@
                 function() {
                     var button = $(this);
 
-                    bootbox.confirm("Are you sure you want to delete this customer?",
-                        function(result) {
+                    bootbox.confirm({
+                        message: "Tem certeza que deseja excluir este cliente? Essa ação não pode ser revertida.",
+                        backdrop: true,
+                        onEscape: function() {},
+                        callback: function(result) {
                             if (result) {
                                 $.ajax({
                                     url: "/api/customers/" + button.attr("data-customer-id"),
                                     method: "DELETE",
-                                    success: function () {
+                                    success: function() {
                                         table.row(button.parents("tr")).remove().draw();
                                     }
                                 });
                             }
-                        });
+                        }
+                    });
                 });
         });
     </script>

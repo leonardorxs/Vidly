@@ -35,7 +35,7 @@ namespace Vidly.ViewModel
         #endregion
         public byte? GenreId { get; set; }
 
-        public string Title => Id != 0 ? "Edit Movie" : "New Movie";
+        public string Title => Id != 0 ? "Editar Filme" : "Cadastrar Filme";
 
         public MovieFormViewModel()
         {

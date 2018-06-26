@@ -10,12 +10,13 @@ namespace Vidly.Models
         #region NameValidation
         [Required]
         [StringLength(100)]
+        [Display(Name = "Nome")]
         #endregion
         public string Name { get; set; }
 
         #region ReleasedDateValidation
         [Required]
-        [Display(Name = "Release Date")]
+        [Display(Name = "Data de Lançamento")]
         #endregion
         public DateTime ReleasedDate { get; set; }
 
@@ -25,7 +26,7 @@ namespace Vidly.Models
         #region StockValidation
         [Required]
         [Range(1, 20)]
-        [Display(Name = "Number in Stock")]
+        [Display(Name = "Número em estoque")]
         #endregion
         public int NumberInStock { get; set; }
 
@@ -35,7 +36,7 @@ namespace Vidly.Models
 
         #region GenreValidation
         [Required]
-        [Display(Name = "Genre")]
+        [Display(Name = "Gênero")]
         #endregion
         public byte GenreId { get; set; }
 

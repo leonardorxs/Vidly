@@ -1,5 +1,6 @@
 ﻿body {
     margin-bottom: 80px;
+    overflow-y: scroll;
 }
 
 html, body{
@@ -46,6 +47,16 @@ input.error {
     color: red;
 }
 
+table {
+    overflow: auto;
+    table-layout: fixed;
+    width: 100%;
+}
+
+th, td, .btn-link, tr {
+    overflow: auto;
+}
+
 
 .footer {
     position: absolute;
@@ -54,3 +65,23 @@ input.error {
     height: 50px; /* Set the fixed height of the footer here */
     line-height: 50px; /* Vertically center the text there */
 }
+
+/* width */
+table ::-webkit-scrollbar {
+    height: 3px;
+}
+
+/* Track */
+table ::-webkit-scrollbar-track {
+    background: #4E5D6C;
+}
+
+/* Handle */
+table ::-webkit-scrollbar-thumb {
+    background: #DF691A;
+}
+
+    /* Handle on hover */
+table ::-webkit-scrollbar-thumb:hover {
+        background: #555;
+    }
