@@ -33,6 +33,8 @@ namespace Vidly.Controllers.Api
                 .Include(m => m.Genre)
                 .Where(m => m.NumberAvailable > 0);
 
+            //var rentedMovies = _context.Rentals.Where(m => m.Movie.NumberInStock < m.);
+
             if (!string.IsNullOrWhiteSpace(query))
                 moviesQuery = moviesQuery.Where(m => m.Name.Contains(query));
 
